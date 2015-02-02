@@ -1,39 +1,4 @@
-from __future__ import division
-
-__author__ = 'Epix'
-
-
-def bms2eve(bms, eve):
-    is_header = True
-    bpm = 0
-    bpms = {}
-    bms_f = open(bms, 'r')
-    eve_f = open(eve, 'w')
-    bar_count = 0
-    bms_b = ''
-    current_time = 0
-    need_tempo = True
-    for line in bms_f:
-        if not line.isspace():
-            if is_header:
-                if 'MAIN DATA FIELD' in line:
-                    is_header = False
-                if line.startswith('#BPM '):
-                    bpm = int(line[5:])
-                elif line.startswith('#BPM'):
-                    bpms[line.split(' ')[0][4:]] = line.split(' ')[1]
-            else:
-                if line.startswith('#'):
-                    while not line.startswith('#' + str(bar_count).rjust(3, '0')):
-                        bar_count += 1
-                        eve_f.write(bms_b2eve_b(bms_b, current_time, bpm))
-                        need_tempo = False
-                        bms_b = ''
-                        current_time += 60 * 1200 / bpm
-                    bms_b += line
-    eve_f.close()
-    bms_f.close()
-
+# coding:utf8
 
 def bms_b2eve_b(bms_b, start_time, bpm, need_tempo=False, is_end=False):
     mark_l = ['END', 'MEASURE', 'HAKU', 'TEMPO', 'PLAY']
@@ -81,4 +46,36 @@ def bms_b2eve_b(bms_b, start_time, bpm, need_tempo=False, is_end=False):
 
 
 if __name__ == '__main__':
-    bms2eve('sample1.bms', 'sample1.eve')
+    filename = 'sample1'
+    is_header = True
+    bpm = 0
+    bpms = {}
+    bms_f = open(filename + '.bms', 'r')
+    eve_f = open(filename + '.eve', 'w')
+    bar_count = 0
+    bms_b = ''
+    current_time = 0
+    need_tempo = True
+    for line in bms_f:
+        if not line.isspace():
+            if is_header:
+                if 'MAIN DATA FIELD' in line:
+                    is_header = False
+                if line.startswith('#BPM '):
+                    bpm = int(line[5:])
+                elif line.startswith('#BPM'):
+                    bpms[line.split(' ')[0][4:]] = line.split(' ')[1].strip()
+                    print(bpms)
+            else:
+                if line.startswith('#'):
+                    while not line.startswith('#' + str(bar_count).rjust(3, '0')):
+                        bar_count += 1
+                        eve_f.write(bms_b2eve_b(bms_b, current_time, bpm))
+                        need_tempo = False
+                        bms_b = ''
+                        current_time += 60 * 1200 / bpm
+                    bms_b += line
+    eve_f.close()
+    bms_f.close()
+
+
