@@ -121,8 +121,8 @@ class Measure:
 
 
 if __name__ == '__main__':
-    debug = True
-    filename = 'test'
+    debug = False
+    filename = 'test_v2'
     is_header = True
     bpm = 0
     bpms = {}
