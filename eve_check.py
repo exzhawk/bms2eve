@@ -1,9 +1,13 @@
+import sys
+
 __author__ = 'Epix'
+
+min_gap = 300
+mark = 'X'
 
 
 def main(filename):
     warning = []
-    min = 300
     plays = {}
     for i in range(0, 16):
         plays[str(i)] = []
@@ -17,7 +21,7 @@ def main(filename):
     for i in range(0, 16):
         play = plays[str(i)]
         for j in range(1, len(play)):
-            if int(play[j]) - int(play[j - 1]) < min:
+            if int(play[j]) - int(play[j - 1]) < min_gap:
                 warning.append(int(play[j]))
     print(sorted(warning))
     f_eve.close()
@@ -26,9 +30,9 @@ def main(filename):
     for line in f_eve:
         if 'PLAY' in line:
             if int(line[0:8]) in warning:
-                line = line[0:-1] + 'X\n'
+                line = line[0:-1] + mark + '\n'
         f_eve_check.write(line)
 
 
 if __name__ == '__main__':
-    main('test_v1')
+    main(sys.argv[1])

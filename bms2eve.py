@@ -1,15 +1,20 @@
 # coding:utf8
 from __future__ import division
 import math
+import sys
 
+__author__ = 'Epix'
 
-def floor(n):
-    return int(math.floor(n))
-
+# debug mode, will print measure number
+debug = False
 
 mark_l = ['END', 'MEASURE', 'HAKU', 'TEMPO', 'PLAY']
 note_c = {'16': '0', '11': '1', '12': '2', '13': '3', '14': '4', '15': '5', '18': '6', '19': '7', '21': '8',
           '22': '9', '23': '10', '24': '11', '25': '12', '28': '13', '29': '14', '26': '15'}
+
+
+def floor(n):
+    return int(math.floor(n))
 
 
 def add_mark(marks, time, mark_type, data):
@@ -109,11 +114,11 @@ class Measure:
                         if act == 1:
                             eve_l = ','.join(
                                 [str(time).rjust(8), mark_l[act].ljust(8), str(v).rjust(8),
-                                 str(self.bar-1).rjust(3, '0').rjust(8)])+','
+                                 str(self.bar - 1).rjust(3, '0').rjust(8)]) + ','
                         else:
                             eve_l = ','.join(
                                 [str(time).rjust(8), mark_l[act].ljust(8), str(v).rjust(8),
-                                 ''.rjust(8)])+','
+                                 ''.rjust(8)]) + ','
                     else:
                         eve_l = ','.join([str(time).rjust(8), mark_l[act].ljust(8), str(v).rjust(8)])
                     eve_b += eve_l + '\n'
@@ -121,8 +126,7 @@ class Measure:
 
 
 if __name__ == '__main__':
-    debug = False
-    filename = 'test_v2'
+    filename = sys.argv[1]
     is_header = True
     bpm = 0
     bpms = {}
