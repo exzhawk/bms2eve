@@ -8,6 +8,7 @@ NOTICE <filename> here DOES NOT contain extension name(bms), if you have a sampl
 ## debug mode
 change "debug = False" to "debug = True" in bms2eve.py to enable debug mode. Extra information(currently the measure number) will be written.
 use eve_check.py to check if two PLAYs are too close
+
         python eve_check.py <filename>
 filename is same as above
 <filename>_check.eve will be generated to show problem line with a "X"
