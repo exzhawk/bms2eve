@@ -1,6 +1,6 @@
 # bms2eve utility
 ## requirements
-python 2.x
+[python 2.x](https://www.python.org/downloads/)
 ## basic usage
         python bms2eve.py filename
 which filename stands for the filename your bms filename.
