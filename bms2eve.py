@@ -162,6 +162,7 @@ if __name__ == '__main__':
     e = Measure(bms_b, current_time, bpm, need_tempo, debug=debug, bar=bar_count)
     e.transform()
     eve_f.write(e.print_eve())
+    # TODO: add END mark and generate blank measures after end
     eve_f.close()
     bms_f.close()
 
