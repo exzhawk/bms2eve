@@ -41,6 +41,10 @@ class Measure:
         # first manual tempo
         if need_tempo:
             self.marks[0][3].append(start_bpm)
+        # is end
+        if is_end:
+            bms_lines = []
+            self.marks[0][0].append(0)
         # noinspection PyBroadException
         try:
             # change beats
@@ -126,8 +130,10 @@ class Measure:
 
 
 if __name__ == '__main__':
-    filename = sys.argv[1]
+    # filename = sys.argv[1]
+    filename='op2'
     is_header = True
+    is_end = False
     bpm = 0
     bpms = {}
     bms_f = open(filename + '.bms', 'r')
@@ -150,7 +156,7 @@ if __name__ == '__main__':
                 if line.startswith('#'):
                     while not line.startswith('#' + str(bar_count).rjust(3, '0')):
                         bar_count += 1
-                        e = Measure(bms_b, current_time, bpm, need_tempo, debug=debug, bar=bar_count)
+                        e = Measure(bms_b, current_time, bpm, need_tempo, debug=debug, bar=bar_count, is_end=is_end)
                         e.transform()
                         current_time = e.start_time
                         bpm = e.start_bpm
@@ -158,8 +164,10 @@ if __name__ == '__main__':
                         need_tempo = False
                         bms_b = ''
                     bms_b += line
+                    if '02' in line[7:]:
+                        is_end = True
     bar_count += 1
-    e = Measure(bms_b, current_time, bpm, need_tempo, debug=debug, bar=bar_count)
+    e = Measure(bms_b, current_time, bpm, need_tempo, debug=debug, bar=bar_count, is_end=is_end)
     e.transform()
     eve_f.write(e.print_eve())
     # TODO: add END mark and generate blank measures after end
