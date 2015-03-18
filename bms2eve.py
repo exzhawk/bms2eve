@@ -65,7 +65,7 @@ class Measure:
                 for bpm_i in range(0, bpm_len):
                     if bpm_s[bpm_i] != '00':
                         time = bpm_i / bpm_len
-                        add_mark(self.marks, time, 3, int(bpms[bpm_s[bpm_i]]))
+                        add_mark(self.marks, time, 3, float(bpms[bpm_s[bpm_i]]))
                 del bms_lines[0]
         except:
             pass
@@ -142,7 +142,7 @@ if __name__ == '__main__':
                 if 'MAIN DATA FIELD' in line:
                     is_header = False
                 if line.startswith('#BPM '):
-                    bpm = int(line[5:])
+                    bpm = float(line[5:])
                 elif line.startswith('#BPM'):
                     bpms[line.split(' ')[0][4:]] = line.split(' ')[1].strip()
                     # print(bpms)
